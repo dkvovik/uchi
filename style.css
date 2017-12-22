@@ -66,9 +66,6 @@ input.error {
 .arrow2 {
     display: none;
 }
-
-.the-end {
-    display: none;
-    font-size: 10vw;
-    padding: 15px;
+#formResult {
+    display: inline-block;
 }

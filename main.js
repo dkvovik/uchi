@@ -52,18 +52,24 @@ $(function () {
 
         var widthArrow = variableA * scale;
         animateArrow(arrow1, widthArrow, inputVariable_width, inputVariable);
+        
+        $('.is_numeric').on('input', function(){
+            this.value = this.value.replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, '');
+        });
+            
 
-        inputVariable.bind('focusout', function () {
-            if ($(this).val() != variableA) {
-                $(this).addClass('error');
+        $('#form1').bind('focusout submit', function (e) {
+            e.preventDefault();
+            if ($(inputVariable).val() != variableA) {
+                $(inputVariable).addClass('error');
                 termA.addClass('error');
-                $(this).focus();
-                $(this).select();
+                $(inputVariable).focus();
+                $(inputVariable).select();
             } else {
                 termA.removeClass('error');
-                $(this).removeClass('error');
-                $(this).addClass('correctly');
-                $(this).prop('disabled', true);
+                $(inputVariable).removeClass('error');
+                $(inputVariable).addClass('correctly');
+                $(inputVariable).prop('disabled', true);
 
                 var arrow2_wrapper = $('.arrow2');
                 arrow2_wrapper.css('margin-left', widthArrow);
@@ -71,36 +77,33 @@ $(function () {
                 widthArrow2 = variableB * scale;
                 animateArrow(arrow2, widthArrow2, inputVariable_width2, inputVariable2);
 
-                inputVariable2.bind('focusout', function () {
-                    if ($(this).val() != variableB) {
-                        $(this).addClass('error');
+                $('#form2').bind('focusout submit', function (e) {
+                    e.preventDefault();
+                    if ($(inputVariable2).val() != variableB) {
+                        $(inputVariable2).addClass('error');
                         termB.addClass('error');
-                        $(this).focus();
-                        $(this).select();
+                        $(inputVariable2).focus();
+                        $(inputVariable2).select();
                     } else {
                         termB.removeClass('error');
-                        $(this).removeClass('error');
-                        $(this).addClass('correctly');
-                        $(this).prop('disabled', true);
+                        $(inputVariable2).removeClass('error');
+                        $(inputVariable2).addClass('correctly');
+                        $(inputVariable2).prop('disabled', true);
 
                         result.val('');
                         result.prop('disabled', false);
                         result.focus();
 
-                        result.bind('focusout', function () {
-                            if ($(this).val() != sum) {
-                                $(this).addClass('error');
-                                $(this).focus();
-                                $(this).select();
+                        $('#formResult').bind('focusout submit', function (e) {
+                            e.preventDefault();
+                            if ($(result).val() != sum) {
+                                $(result).addClass('error');
+                                $(result).focus();
+                                $(result).select();
                             } else {
-                                var restart = confirm("Поздравляем! Хотите сыграть еще раз?");
-                                if (restart) {
-                                    location.reload();
-                                } else {
-                                    $('.game').hide(600, function () {
-                                        $('.the-end').show(900);
-                                    })
-                                }
+                                $(result).removeClass('error');
+                                $(result).addClass('correctly');
+                                $(result).prop('disabled', true);
                             }
                         });
                     }
